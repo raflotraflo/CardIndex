@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CardIndex.Domain.Interfaces;
+using System.Windows.Threading;
 
 namespace CardIndex.UI.ViewModel
 {
@@ -38,15 +40,18 @@ namespace CardIndex.UI.ViewModel
         private List<ContractorViewModel> _changedContractors;
         private ContractorViewModel _selectedContractorVM;
         private bool _isNewChangesToSave;
+        private IContractorService _contractorService;
 
         #endregion Private members
 
         #region .Ctor
 
-        public ContractorFactoryViewModel()
+        public ContractorFactoryViewModel(IContractorService contractorService)
         {
             if (!ViewModelBase.IsInDesignModeStatic)
             {
+                _contractorService = contractorService;
+
                 InitializeCommands();
 
                 _addedContractors = new List<ContractorViewModel>();
@@ -57,7 +62,7 @@ namespace CardIndex.UI.ViewModel
 
                 ContractorListVM.Add(new ContractorViewModel() { Id = 10, Name = "Rafał" });
 
-                Task.Factory.StartNew(RefreshContractorExecuteAsync);
+                Task.Factory.StartNew(RefreshContractorAsync);
             }
         }
 
@@ -124,33 +129,51 @@ namespace CardIndex.UI.ViewModel
             DeleteContractorCommand = new RelayCommand<ContractorViewModel>(async (x) => await DeleteContractorExecuteAsync(x).ConfigureAwait(true));
             EditContractorCommand = new RelayCommand<ContractorViewModel>(async (x) => await EditContractorExecuteAsync(x).ConfigureAwait(true));
             AddContractorCommand = new RelayCommand(async () => await AddContractorExecuteAsync().ConfigureAwait(true));
-            RefreshContractorCommand = new RelayCommand(async () => await RefreshContractorExecuteAsync().ConfigureAwait(true));
+            RefreshContractorCommand = new RelayCommand(async () => await RefreshContractorAsync().ConfigureAwait(true));
         }
 
 
-        private async Task RefreshContractorExecuteAsync()
+        private async Task RefreshContractorAsync()
         {
-            ContractorViewModel newContractor = new ContractorViewModel();
-            AddContractorView addNewContractorDialog = new AddContractorView { DataContext = newContractor };
-
-            while (true)
+            bool isError = false;
+            try
             {
-                object result = await DialogHost.Show(addNewContractorDialog, CONTRACTOR_DIALOG).ConfigureAwait(true);
+                _addedContractors.Clear();
+                _deletedContractors.Clear();
+                _changedContractors.Clear();
 
-                if ((bool)result == false)
-                {
-                    break;
-                }
+                Task task = Task.Run(() => RefreshAll());
 
-                ContractorListVM.Add(newContractor);
-                _addedContractors.Add(newContractor);
+                await task.ConfigureAwait(true);
 
                 CheckIfNewChangesToSave();
-                break;
+            }
+            catch(Exception ex)
+            {
+                isError = true;
+            }
+
+            if(isError)
+            {
+                MessageDialog messageDialog = new MessageDialog() { DataContext = Properties.Resources.Msg_Error_DataBase };
+                await DialogHost.Show(messageDialog, CONTRACTOR_DIALOG);
             }
         }
 
+        private void RefreshAll()
+        {
+            var all = _contractorService.GetAllContractors().ToList();
 
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(
+                () => {
+                    ContractorListVM.Clear();
+                    all.ForEach(x =>
+                      {
+                          ContractorListVM.Add(new ContractorViewModel(x));
+                      });
+                  }));
+
+        }
 
         private async Task SaveExecuteAsync()
         {
@@ -159,41 +182,32 @@ namespace CardIndex.UI.ViewModel
 
             if (result)
             {
-                ////saving configuration
-                //List<IPLCDriver> plcDrivers = new List<IPLCDriver>();
+                var toDelete = new List<Contractor>();
+                var toUpdate = new List<Contractor>();
+                var toAdd = new List<Contractor>();
 
-                //foreach (PlcDriverViewModel plc in ContractorListVM)
-                //{
-                //    DispatchIfNecessary((Action)delegate
-                //    {
-                //        plcDrivers.Add(plc.PlcDriver);
-                //    });
-                //}
+                _addedContractors.ForEach(x =>
+                {
+                    toAdd.Add(x.Contractor);
+                });
 
-                //ConfigurationHelper.Instance.SaveSettings(plcDrivers);
+                _deletedContractors.ForEach(x =>
+                {
+                    toDelete.Add(x.Contractor);
+                });
 
-                //if (_serviceStateManager.ServiceState)
-                //{
-                //    //sendPipeMessage
-                //    foreach (IContractor add in _addedContractors)
-                //    {
-                //        SendPipeMessage<IContractor>(_pipeClientHelper.SendAddContractor, add);
-                //    }
+                _changedContractors.ForEach(x =>
+                {
+                    toUpdate.Add(x.Contractor);
+                });
 
-                //    foreach (IContractor delete in _deletedContractors)
-                //    {
-                //        SendPipeMessage<IContractor>(_pipeClientHelper.SendDeleteContractor, delete);
-                //    }
-                //}
+                _contractorService.AddContractors(toAdd);
+                _contractorService.DeleteContractors(toDelete);
+                _contractorService.UpdateContractors(toUpdate);
 
-                _addedContractors.Clear();
-                _deletedContractors.Clear();
-                CheckIfNewChangesToSave();
+                await RefreshContractorAsync();
             }
         }
-
-
-
 
         private async Task DeleteContractorExecuteAsync(ContractorViewModel contractor)
         {
@@ -245,8 +259,6 @@ namespace CardIndex.UI.ViewModel
             }
         }
 
-
-
         private async Task EditContractorExecuteAsync(ContractorViewModel contractor)
         {
 
@@ -268,7 +280,6 @@ namespace CardIndex.UI.ViewModel
                 break;
             }
         }
-
 
         private void CheckIfNewChangesToSave()
         {

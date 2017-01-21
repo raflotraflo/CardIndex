@@ -6,6 +6,8 @@ using MaterialDesignColors;
 using System;
 using MaterialDesignThemes.Wpf;
 using System.Linq;
+using CardIndex.Core.Services;
+using CardIndex.Domain.Interfaces;
 
 namespace CardIndex.UI.ViewModel
 {
@@ -70,6 +72,7 @@ namespace CardIndex.UI.ViewModel
             containerBulider.RegisterType<ThemeViewModel>().SingleInstance();
             containerBulider.RegisterType<RootViewModel>().SingleInstance();
             containerBulider.RegisterType<ContractorFactoryViewModel>().SingleInstance();
+            containerBulider.RegisterType<ContractorService>().As<IContractorService>().InstancePerDependency();
 
             container = containerBulider.Build();
         }

@@ -61,6 +61,15 @@ namespace CardIndex.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error! Problem with connection to database.
+        /// </summary>
+        internal static string Msg_Error_DataBase {
+            get {
+                return ResourceManager.GetString("Msg_Error_DataBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Card index by Trufel.
         /// </summary>
         internal static string Msg_Program_Info {

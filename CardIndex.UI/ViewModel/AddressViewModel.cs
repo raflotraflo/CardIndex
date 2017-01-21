@@ -89,9 +89,9 @@ namespace CardIndex.UI.ViewModel
             }
             set
             {
-                if (_address.Street != value)
+                if (_address.ZipCode != value)
                 {
-                    _address.Street = value;
+                    _address.ZipCode = value;
                     RaisePropertyChanged(() => ZipCode);
                 }
             }
@@ -105,9 +105,9 @@ namespace CardIndex.UI.ViewModel
             }
             set
             {
-                if (_address.Street != value)
+                if (_address.City != value)
                 {
-                    _address.Street = value;
+                    _address.City = value;
                     RaisePropertyChanged(() => City);
                 }
             }
@@ -119,6 +119,12 @@ namespace CardIndex.UI.ViewModel
 
         private void FillProperties(Address address)
         {
+            if(address == null)
+            {
+                _address = new Address();
+                return;
+            }
+
             Id = address.Id;
             Street = address.Street;
             ZipCode = address.ZipCode;

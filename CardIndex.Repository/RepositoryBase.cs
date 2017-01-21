@@ -30,7 +30,7 @@ namespace CardIndex.Repository
 
         public virtual T Add(T entity)
         {
-            throw new NotImplementedException();
+            return _dbSet.Add(entity);
         }
 
         public virtual IQueryable<T> All()
@@ -45,7 +45,8 @@ namespace CardIndex.Repository
 
         public virtual bool Delete(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Remove(entity);
+            return true;
         }
 
         public virtual IQueryable<T> FilterBy(System.Linq.Expressions.Expression<Func<T, bool>> expression)
@@ -65,7 +66,7 @@ namespace CardIndex.Repository
 
         public virtual void SaveChanges()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public virtual bool Update(IEnumerable<T> entities)
@@ -75,7 +76,8 @@ namespace CardIndex.Repository
 
         public virtual T Update(T entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+            return entity;
         }
     }
 }

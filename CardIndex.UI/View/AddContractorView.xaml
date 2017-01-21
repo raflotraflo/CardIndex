@@ -9,9 +9,13 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DataContext="{Binding Path=ContractorFactoryVM.ContractorListVM, Source={StaticResource Locator}}"
-             d:DesignHeight="400" d:DesignWidth="500" MinWidth="500">
+             d:DesignHeight="400" d:DesignWidth="600" MinWidth="600">
     <Grid Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -21,7 +25,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--<TextBlock FontSize="18">Add new scanner:</TextBlock>-->
-        <TextBox Grid.Row="1" wpf:HintAssist.Hint="Name" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" MaxLength="4" IsReadOnly="False" Margin="0 22 0 4" FontSize="18">
+        <TextBox Grid.Row="0" wpf:HintAssist.Hint="Name" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" MaxLength="30" IsReadOnly="False" Margin="0 22 0 4" FontSize="18">
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                     <!--<Binding.ValidationRules>
@@ -31,30 +35,56 @@
             </TextBox.Text>
         </TextBox>
 
-
-
-
-        <TextBox Grid.Row="3" wpf:HintAssist.Hint="Surname"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" MaxLength="4" Margin="0 22 0 4" FontSize="18">
+        <TextBox Grid.Row="1" wpf:HintAssist.Hint="Surname"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" MaxLength="30" Margin="0 22 0 4" FontSize="18">
             <TextBox.Text>
                 <Binding Path="Surname" UpdateSourceTrigger="PropertyChanged">
-                    <!--<Binding.ValidationRules>
-                        <SFCSDevicesGatewayUIValidationRules:MoreThenZeroValidationRule ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>-->
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox Grid.Row="2" wpf:HintAssist.Hint="Email"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" MaxLength="50" Margin="0 22 0 4" FontSize="18">
+            <TextBox.Text>
+                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox Grid.Row="3" wpf:HintAssist.Hint="Phone Number"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" MaxLength="15" Margin="0 22 0 4" FontSize="18">
+            <TextBox.Text>
+                <Binding Path="PhoneNumber" UpdateSourceTrigger="PropertyChanged">
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox Grid.Row="4" wpf:HintAssist.Hint="Date Of Birth"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0 22 0 4" FontSize="18">
+            <TextBox.Text>
+                <Binding Path="DateOfBirth" UpdateSourceTrigger="PropertyChanged">
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox Grid.Row="5" wpf:HintAssist.Hint="Street"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0 22 0 4" FontSize="18">
+            <TextBox.Text>
+                <Binding Path="Address.Street" UpdateSourceTrigger="PropertyChanged">
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Grid.Row="6" wpf:HintAssist.Hint="ZipCode"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0 22 0 4" FontSize="18">
+            <TextBox.Text>
+                <Binding Path="Address.ZipCode" UpdateSourceTrigger="PropertyChanged">
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Grid.Row="7" wpf:HintAssist.Hint="City"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0 22 0 4" FontSize="18">
+            <TextBox.Text>
+                <Binding Path="Address.City" UpdateSourceTrigger="PropertyChanged">
                 </Binding>
             </TextBox.Text>
         </TextBox>
 
 
 
-        <TextBox Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Stretch" MaxLength="150" Margin="0 22 0 4"
-                 MinWidth="280" MaxWidth="450" FontSize="16"
-                 AcceptsReturn="True"                 
-                 VerticalScrollBarVisibility="Auto"
-                 wpf:HintAssist.Hint="Email"
-                 MinHeight="35" MaxHeight="80" Text="{Binding Email}" />
-
-
-        <StackPanel Orientation="Horizontal" Grid.Row="6" Margin="0 16 0 0" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Row="10" Margin="0 16 0 0" HorizontalAlignment="Center">
             <Button IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}" Command="{x:Static wpf:DialogHost.CloseDialogCommand}" FontSize="18">
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>

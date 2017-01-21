@@ -71,9 +71,9 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" IsReadOnly="True" Header="Id" ElementStyle="{StaticResource CenterDataGridCellStyle}"/>
-                    <DataGridTextColumn Binding="{Binding Name}" IsReadOnly="True" Header="Name" ElementStyle="{StaticResource CenterDataGridCellStyle}"/>
-                    <DataGridTextColumn Binding="{Binding Surname}" IsReadOnly="True" Header="Address" MinWidth="150" ElementStyle="{StaticResource CenterDataGridCellStyle}"/>
-                    <DataGridTextColumn Binding="{Binding Email}" IsReadOnly="True" Header="Email" ElementStyle="{StaticResource CenterDataGridCellStyle}"/>
+                    <DataGridTextColumn Binding="{Binding Name}" IsReadOnly="True" Header="Name" ElementStyle="{StaticResource CenterDataGridCellStyle}" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Surname}" IsReadOnly="True" Header="Address" MinWidth="150" ElementStyle="{StaticResource CenterDataGridCellStyle}" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Email}" IsReadOnly="True" Header="Email" ElementStyle="{StaticResource CenterDataGridCellStyle}" Width="*"/>
                     <DataGridTextColumn IsReadOnly="True" Header="" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
