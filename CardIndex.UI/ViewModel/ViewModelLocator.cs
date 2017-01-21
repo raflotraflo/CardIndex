@@ -69,6 +69,7 @@ namespace CardIndex.UI.ViewModel
             containerBulider.RegisterType<MainViewModel>().SingleInstance();
             containerBulider.RegisterType<ThemeViewModel>().SingleInstance();
             containerBulider.RegisterType<RootViewModel>().SingleInstance();
+            containerBulider.RegisterType<ContractorFactoryViewModel>().SingleInstance();
 
             container = containerBulider.Build();
         }
@@ -76,6 +77,14 @@ namespace CardIndex.UI.ViewModel
         #endregion
 
         #region Properties
+
+        public ContractorFactoryViewModel ContractorFactoryVM
+        {
+            get
+            {
+                return container.Resolve<ContractorFactoryViewModel>();
+            }
+        }
 
         public ThemeViewModel ThemeVM
         {

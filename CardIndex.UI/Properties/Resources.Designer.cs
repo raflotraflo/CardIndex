@@ -97,6 +97,15 @@ namespace CardIndex.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove {0}?.
+        /// </summary>
+        internal static string Msg_Question_DeleteContractor {
+            get {
+                return ResourceManager.GetString("Msg_Question_DeleteContractor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to exit without saving changes?.
         /// </summary>
         internal static string Msg_Question_ExitWithoutSavingChanges {

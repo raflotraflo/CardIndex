@@ -98,10 +98,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\AddressViewModel.cs" />
+    <Compile Include="ViewModel\ContractorViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RootViewModel.cs" />
     <Compile Include="ViewModel\ThemeViewModel.cs" />
+    <Compile Include="ViewModel\ContractorFactoryViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\AddContractorView.xaml.cs">
+      <DependentUpon>AddContractorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContractListView.xaml.cs">
+      <DependentUpon>ContractListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -136,6 +145,14 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AddContractorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContractListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainView.xaml">
       <SubType>Designer</SubType>
@@ -196,7 +213,16 @@
   <ItemGroup>
     <Resource Include="contractorIcon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CardIndex.Core\CardIndex.Core.csproj">
+      <Project>{4a958e84-e163-4309-8c8c-82691c658452}</Project>
+      <Name>CardIndex.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CardIndex.Domain\CardIndex.Domain.csproj">
+      <Project>{210cabb8-330f-4303-995a-91efaa1da60f}</Project>
+      <Name>CardIndex.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

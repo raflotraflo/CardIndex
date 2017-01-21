@@ -47,6 +47,76 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="BaseCircularButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                <Setter Property="Margin" Value="5" />
+            </Style>
+
+            <LinearGradientBrush x:Key="SelectedAndConnectedBrush" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                <GradientStop Color="#FFB3B0B0" Offset="1"/>
+                <GradientStop Color="LightGreen" Offset="0"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="SelectedAndDisconnectedBrush" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                <GradientStop Color="Gainsboro" Offset="1"/>
+                <GradientStop Color="Coral" Offset="0"/>
+            </LinearGradientBrush>
+
+            <Style x:Key="DataGridCellWithoutSelected" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="{x:Null}" />
+                <Setter Property="FontFamily" Value="/Fonts/#Titillium"/>
+                <Style.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                            <Condition Binding="{Binding IsConnected}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource SelectedAndConnectedBrush}" />
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                            <Condition Binding="{Binding IsConnected}" Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource SelectedAndDisconnectedBrush}" />
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="SelectedRowColor" TargetType="DataGridRow">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsConnected}" Value="false">
+                        <Setter Property="Background" Value="Coral"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsConnected}" Value="true">
+                        <Setter Property="Background" Value="LightGreen" />
+                    </DataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                            <Condition Binding="{Binding IsConnected}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource SelectedAndConnectedBrush}" />
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                            <Condition Binding="{Binding IsConnected}" Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource SelectedAndDisconnectedBrush}" />
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+
             <ResourceDictionary.MergedDictionaries>
 
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->

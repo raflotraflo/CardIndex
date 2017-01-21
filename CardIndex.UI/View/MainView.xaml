@@ -18,10 +18,48 @@
         </Grid.RowDefinitions>
 
         <DockPanel>
-            <TextBlock Text="Test xD" />
+
         </DockPanel>
 
+        <dragablz:TabablzControl Grid.Row="1" x:Name="mainTabControl" FontSize="18">
+            <dragablz:TabablzControl.Resources>
+                <Style x:Key="TabItemTextBox" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkForegroundBrush}"/>
+                    <Setter Property="FontFamily" Value="/Fonts/#Titillium"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="18"/>
+                </Style>
+                <Style x:Key="TabItemTextBoxPackIcon" TargetType="materialDesign:PackIcon" BasedOn="{StaticResource {x:Type materialDesign:PackIcon}}">
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkForegroundBrush}"/>
+                    <Setter Property="Width" Value="20"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Margin" Value="0,0,4,0"/>
+                </Style>
+                <Style TargetType="WrapPanel">
+                    <Setter Property="Margin" Value="0,0,20,0"/>
+                </Style>
+            </dragablz:TabablzControl.Resources>
+            <TabItem>
+                <TabItem.Header>
+                    <WrapPanel>
+                        <materialDesign:PackIcon Style="{StaticResource TabItemTextBoxPackIcon}" Kind="Account"/>
+                        <TextBlock Style="{StaticResource TabItemTextBox}">Contracts</TextBlock>
+                    </WrapPanel>
+                </TabItem.Header>
 
+                <local:ContractListView DataContext="{Binding Path=ContractorFactoryVM, Source={StaticResource Locator}}" />
+                
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <WrapPanel>
+                        <materialDesign:PackIcon Style="{StaticResource TabItemTextBoxPackIcon}" Kind="BlockHelper"/>
+                        <TextBlock Style="{StaticResource TabItemTextBox}">Empty Item</TextBlock>
+                    </WrapPanel>
+                </TabItem.Header>
+            </TabItem>
+
+        </dragablz:TabablzControl>
     </Grid>
 </UserControl>
 
