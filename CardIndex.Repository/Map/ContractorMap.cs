@@ -20,7 +20,7 @@ namespace CardIndex.Repository.Map
 
             Property(t => t.AddressId).IsOptional();
 
-            HasRequired(p => p.Address).WithMany().HasForeignKey(x => x.AddressId).WillCascadeOnDelete(true);
+            HasOptional(p => p.Address).WithMany().HasForeignKey(x => x.AddressId).WillCascadeOnDelete(true);
         }
     }
 }

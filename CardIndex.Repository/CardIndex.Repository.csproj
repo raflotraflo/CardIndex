@@ -54,6 +54,11 @@
     <Compile Include="IRepositoryContext.cs" />
     <Compile Include="Map\AddressMap.cs" />
     <Compile Include="Map\ContractorMap.cs" />
+    <Compile Include="Migrations\201701211313516_First.cs" />
+    <Compile Include="Migrations\201701211313516_First.Designer.cs">
+      <DependentUpon>201701211313516_First.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="RepositoryContext.cs" />
@@ -67,6 +72,11 @@
       <Project>{210cabb8-330f-4303-995a-91efaa1da60f}</Project>
       <Name>CardIndex.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701211313516_First.resx">
+      <DependentUpon>201701211313516_First.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
