@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CardIndex.Domain.Interfaces
 {
-    interface IContractorRepository : IRepository<Contractor>
+    public interface IContractorRepository : IRepository<Contractor>
     {
     }
 }

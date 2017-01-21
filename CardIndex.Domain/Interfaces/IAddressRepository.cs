@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CardIndex.Domain.Interfaces
 {
-    interface IAddressRepository : IRepository<Address>
+    public interface IAddressRepository : IRepository<Address>
     {
     }
 }
