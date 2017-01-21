@@ -30,5 +30,7 @@ namespace CardIndex.UI.ViewModel
             ////    // Code runs "for real"
             ////}
         }
+
+        public bool IsActive { get; set; }
     }
 }

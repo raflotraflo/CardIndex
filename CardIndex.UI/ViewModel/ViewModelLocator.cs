@@ -1,20 +1,11 @@
-/*
-  In App.xaml:
-  <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:CardIndex.UI"
-                           x:Key="Locator" />
-  </Application.Resources>
-  
-  In the View:
-  DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-
-  You can also use Blend to do all this with the tool's support.
-  See http://www.galasoft.ch/mvvm
-*/
-
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using Autofac;
+using MaterialDesignColors;
+using System;
+using MaterialDesignThemes.Wpf;
+using System.Linq;
 
 namespace CardIndex.UI.ViewModel
 {
@@ -24,12 +15,43 @@ namespace CardIndex.UI.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
-        /// <summary>
-        /// Initializes a new instance of the ViewModelLocator class.
-        /// </summary>
+        #region Private members
+
+        public readonly IContainer container;
+
+        #endregion Private members
+
+        #region .ctor
+
         public ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            //set correct path
+            //System.IO.Directory.SetCurrentDirectory(System.AppDomain.CurrentDomain.BaseDirectory);
+
+            //load Theme configuration
+
+            new PaletteHelper().SetLightDark(Properties.Settings.Default.ThemeBase);
+
+            if (Properties.Settings.Default.ThemeAccent != string.Empty)
+            {
+                try
+                {
+                    Swatch swatch = new SwatchesProvider().Swatches.Where(s => s.Name == Properties.Settings.Default.ThemeAccent).First();
+                    new PaletteHelper().ReplaceAccentColor(swatch);
+                }
+                catch (Exception) { }
+            }
+
+            if (Properties.Settings.Default.ThemePrimary != string.Empty)
+            {
+                try
+                {
+                    Swatch swatch = new SwatchesProvider().Swatches.Where(s => s.Name == Properties.Settings.Default.ThemePrimary).First();
+                    new PaletteHelper().ReplacePrimaryColor(swatch);
+                }
+                catch (Exception) { }
+            }
+
 
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
@@ -42,20 +64,57 @@ namespace CardIndex.UI.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            ContainerBuilder containerBulider = new ContainerBuilder();
+
+            containerBulider.RegisterType<MainViewModel>().SingleInstance();
+            containerBulider.RegisterType<ThemeViewModel>().SingleInstance();
+            containerBulider.RegisterType<RootViewModel>().SingleInstance();
+
+            container = containerBulider.Build();
         }
 
-        public MainViewModel Main
+        #endregion
+
+        #region Properties
+
+        public ThemeViewModel ThemeVM
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return container.Resolve<ThemeViewModel>();
             }
         }
-        
+
+        public RootViewModel RootVM
+        {
+            get
+            {
+                return container.Resolve<RootViewModel>();
+            }
+        }
+
+        public MainViewModel MainVM
+        {
+            get
+            {
+                return container.Resolve<MainViewModel>();
+            }
+        }
+
+        //public ApplicationSettingsViewModel ApplicationSettingsVM
+        //{
+        //    get
+        //    {
+        //        return container.Resolve<ApplicationSettingsViewModel>();
+        //    }
+        //}
+        #endregion Properties
+
+        #region Methods
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
         }
+        #endregion Methods
     }
 }
