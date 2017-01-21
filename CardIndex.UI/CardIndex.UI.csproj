@@ -109,6 +109,7 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\AddressViewModel.cs" />
     <Compile Include="ViewModel\ContractorViewModel.cs" />
+    <Compile Include="ViewModel\GenerateDataViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RootViewModel.cs" />
     <Compile Include="ViewModel\ThemeViewModel.cs" />

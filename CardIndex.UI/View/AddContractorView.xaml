@@ -56,12 +56,16 @@
             </TextBox.Text>
         </TextBox>
 
-        <TextBox Grid.Row="4" wpf:HintAssist.Hint="Date Of Birth"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0 22 0 4" FontSize="18">
+        <!--<TextBox Grid.Row="4" wpf:HintAssist.Hint="Date Of Birth"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0 22 0 4" FontSize="18">
             <TextBox.Text>
                 <Binding Path="DateOfBirth" UpdateSourceTrigger="PropertyChanged">
                 </Binding>
             </TextBox.Text>
-        </TextBox>
+        </TextBox>-->
+
+        <DatePicker Grid.Row="4" wpf:HintAssist.Hint="Date Of Birth" 
+                    SelectedDate="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}"
+                    Margin="0 22 0 4" FontSize="18"></DatePicker>
 
         <TextBox Grid.Row="5" wpf:HintAssist.Hint="Street"  Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="0 22 0 4" FontSize="18">
             <TextBox.Text>
@@ -81,6 +85,8 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+
+
 
 
 

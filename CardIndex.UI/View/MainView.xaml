@@ -54,9 +54,21 @@
                 <TabItem.Header>
                     <WrapPanel>
                         <materialDesign:PackIcon Style="{StaticResource TabItemTextBoxPackIcon}" Kind="BlockHelper"/>
-                        <TextBlock Style="{StaticResource TabItemTextBox}">Empty Item</TextBlock>
+                        <TextBlock Style="{StaticResource TabItemTextBox}">Database set</TextBlock>
                     </WrapPanel>
                 </TabItem.Header>
+                <Grid>
+
+                    <Button x:Name="addNewData" Command="{Binding Path=GenerateDataVM.GeneraDataCommand, Source={StaticResource Locator}}" HorizontalAlignment="Center">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="AccountMultiplePlus"  Height="24" Width="24" />
+                                <TextBlock Text="Add new records to database" VerticalAlignment="Center" Margin="10,0" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+
+                </Grid>
             </TabItem>
 
         </dragablz:TabablzControl>

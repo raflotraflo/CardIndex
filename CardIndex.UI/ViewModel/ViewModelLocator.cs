@@ -72,6 +72,7 @@ namespace CardIndex.UI.ViewModel
             containerBulider.RegisterType<ThemeViewModel>().SingleInstance();
             containerBulider.RegisterType<RootViewModel>().SingleInstance();
             containerBulider.RegisterType<ContractorFactoryViewModel>().SingleInstance();
+            containerBulider.RegisterType<GenerateDataViewModel>().SingleInstance();
             containerBulider.RegisterType<ContractorService>().As<IContractorService>().InstancePerDependency();
 
             container = containerBulider.Build();
@@ -80,6 +81,14 @@ namespace CardIndex.UI.ViewModel
         #endregion
 
         #region Properties
+
+        public GenerateDataViewModel GenerateDataVM
+        {
+            get
+            {
+                return container.Resolve<GenerateDataViewModel>();
+            }
+        }
 
         public ContractorFactoryViewModel ContractorFactoryVM
         {
